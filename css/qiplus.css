@@ -1,0 +1,91 @@
+/*
+ * QIPLUS Conference visual layer.
+ *
+ * The welcome screen in the official Jitsi image is styled by the compiled
+ * css/all.css bundle.  Keep these overrides separate so the brand can be
+ * updated without rebuilding the whole React/Webpack application.
+ */
+
+body.welcome-page {
+    background: #020817;
+}
+
+body.welcome-page .welcome {
+    background: #020817;
+}
+
+body.welcome-page .welcome .header {
+    background-color: #020817;
+    background-image: linear-gradient(135deg, #020817 0%, #071126 55%, #1b0b2b 100%);
+}
+
+body.welcome-page .welcome .header .header-container::before {
+    background: url('../images/logo.png') center / contain no-repeat;
+    content: '';
+    display: block;
+    height: 48px;
+    margin-bottom: 20px;
+    width: 220px;
+}
+
+/* Header strings are bundled with Jitsi's locale files, so replace their
+ * visible welcome-screen presentation without changing the application code. */
+body.welcome-page .welcome .header .header-text-title,
+body.welcome-page .welcome .header .header-text-subtitle {
+    font-size: 0;
+}
+
+body.welcome-page .welcome .header .header-text-title::after {
+    color: #f4f7ff;
+    content: 'QIPLUS Conference';
+    font-size: 2.625rem;
+    font-weight: 600;
+    line-height: 3.125rem;
+}
+
+body.welcome-page .welcome .header .header-text-subtitle::after {
+    color: #c8d0e0;
+    content: 'Reuniões seguras e de alta qualidade';
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.625rem;
+}
+
+body.welcome-page .welcome .header #enter_room .join-meeting-container,
+body.welcome-page .welcome .header #enter_room .enter-room-input-container .enter-room-input {
+    background: #071126;
+    color: #f4f7ff;
+}
+
+body.welcome-page .welcome .header #enter_room .enter-room-input-container .enter-room-input::placeholder {
+    color: #a7b1c5;
+}
+
+body.welcome-page .welcome .header .welcome-page-button {
+    background: #c000d8 !important;
+}
+
+body.welcome-page .welcome .header .welcome-page-button:hover,
+body.welcome-page .welcome .header .welcome-page-button:focus {
+    background: #e028ed !important;
+}
+
+body.welcome-page .welcome .header .welcome-page-button:focus-within {
+    outline-color: #e78af4;
+}
+
+body.welcome-page .welcome .tab-container .tab-buttons,
+body.welcome-page .welcome .tab-container .tab-buttons [role='tab'] {
+    background-color: #101d35;
+    color: #f4f7ff;
+}
+
+body.welcome-page .welcome .tab-container .tab-buttons [role='tab'][aria-selected='true'] {
+    background-color: #25334d;
+}
+
+body.welcome-page .welcome .welcome-card--blue,
+body.welcome-page .welcome .welcome-card--dark {
+    background-color: #071126;
+    border-color: #25334d;
+}

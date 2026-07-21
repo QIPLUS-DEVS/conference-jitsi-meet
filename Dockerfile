@@ -8,6 +8,7 @@ FROM jitsi/web:${JITSI_IMAGE_VERSION}
 
 # QIPLUS browser branding.
 COPY index.html /usr/share/jitsi-meet/index.html
+COPY css/qiplus.css /usr/share/jitsi-meet/css/qiplus.css
 COPY images/logo.png /usr/share/jitsi-meet/images/logo.png
 COPY images/favicon.ico /usr/share/jitsi-meet/images/favicon.ico
 

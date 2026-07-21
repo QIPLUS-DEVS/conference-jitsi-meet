@@ -1,11 +1,8 @@
 services:
   jitsi-web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        JITSI_IMAGE_VERSION: ${JITSI_IMAGE_VERSION:-stable-10888}
-    image: qiplus/jitsi-web:${QIPLUS_IMAGE_TAG:-local}
+    # Built and published by .github/workflows/publish-web-image.yml.
+    image: ${QIPLUS_WEB_IMAGE:-ghcr.io/qiplus-devs/conference-jitsi-meet}:${QIPLUS_WEB_TAG:-latest}
+    pull_policy: always
     restart: unless-stopped
     expose:
       - '80'

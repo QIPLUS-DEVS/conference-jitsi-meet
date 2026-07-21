@@ -13,6 +13,7 @@ MEDIAPIPE_SEGMENTATION_DIR = node_modules/@mediapipe/selfie_segmentation
 FACE_MODELS_DIR = node_modules/@vladmandic/human-models/models
 NODE_SASS = ./node_modules/.bin/sass
 NPM = npm
+NODE_OPTIONS ?= --max-old-space-size=8192
 OUTPUT_DIR = .
 STYLES_BUNDLE = css/all.bundle.css
 STYLES_DESTINATION = css/all.css
@@ -28,7 +29,7 @@ endif
 all: compile deploy
 
 compile: clean
-	NODE_OPTIONS=--max-old-space-size=8192 \
+	NODE_OPTIONS=$(NODE_OPTIONS) \
 	$(WEBPACK)
 
 clean:

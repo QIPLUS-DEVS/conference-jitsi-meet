@@ -13,7 +13,10 @@ RUN npm ci --ignore-scripts --legacy-peer-deps \
     && ./node_modules/.bin/patch-package --error-on-fail
 
 COPY . .
-RUN make
+# GitHub-hosted runners have 7 GB of RAM. Keep the build below that limit;
+# callers can increase it with `docker build --build-arg WEBPACK_HEAP_MB=...`.
+ARG WEBPACK_HEAP_MB=6144
+RUN make NODE_OPTIONS=--max-old-space-size=${WEBPACK_HEAP_MB}
 
 # Keep the official web container entrypoint and its runtime configuration,
 # but replace the static application with the version built from this fork.

@@ -48,7 +48,6 @@ jobs:
           push: true
           build-args: |
             JITSI_IMAGE_VERSION=stable-10888
-            WEBPACK_HEAP_MB=6144
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha

@@ -23,6 +23,7 @@ RUN make NODE_OPTIONS=--max-old-space-size=${WEBPACK_HEAP_MB}
 FROM jitsi/web:${JITSI_IMAGE_VERSION}
 
 COPY --from=builder /usr/src/jitsi-meet/index.html /usr/share/jitsi-meet/index.html
+COPY --from=builder /usr/src/jitsi-meet/title.html /usr/share/jitsi-meet/title.html
 COPY --from=builder /usr/src/jitsi-meet/css /usr/share/jitsi-meet/css
 COPY --from=builder /usr/src/jitsi-meet/fonts /usr/share/jitsi-meet/fonts
 COPY --from=builder /usr/src/jitsi-meet/images /usr/share/jitsi-meet/images

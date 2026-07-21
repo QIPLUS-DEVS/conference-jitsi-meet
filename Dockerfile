@@ -7,9 +7,9 @@ ARG JITSI_IMAGE_VERSION=stable-10888
 FROM jitsi/web:${JITSI_IMAGE_VERSION}
 
 # QIPLUS browser branding.
+COPY index.html /usr/share/jitsi-meet/index.html
 COPY images/logo.png /usr/share/jitsi-meet/images/logo.png
 COPY images/favicon.ico /usr/share/jitsi-meet/images/favicon.ico
-COPY title.html /usr/share/jitsi-meet/title.html
 
 # The official image copies this file to the persistent /config volume on
 # every start, preserving the QIPLUS name and logos after redeployments.

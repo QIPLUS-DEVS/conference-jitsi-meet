@@ -9,7 +9,7 @@ WORKDIR /usr/src/jitsi-meet
 COPY package.json package-lock.json ./
 # The upstream postinstall script configures React Native as well. The web
 # image does not need that work, but it does need the repository patches.
-RUN npm ci --ignore-scripts \
+RUN npm ci --ignore-scripts --legacy-peer-deps \
     && ./node_modules/.bin/patch-package --error-on-fail
 
 COPY . .

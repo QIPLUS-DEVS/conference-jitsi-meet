@@ -10,6 +10,7 @@ services:
     expose:
       - '80'
     environment:
+      SERVICE_URL_JITSI
       PUBLIC_URL: ${SERVICE_URL_JITSI}
       ENABLE_AUTH: ${ENABLE_AUTH:-1}
       ENABLE_GUESTS: ${ENABLE_GUESTS:-0}

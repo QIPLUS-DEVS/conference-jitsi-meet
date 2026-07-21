@@ -9,7 +9,8 @@ pack in Coolify.
 1. Create an application from this Git repository and select **Docker Compose**.
 2. Set the base directory to `/` and the Compose location to `docker-compose.yml`.
 3. Assign `https://meet.qiplus.com.br` to the `jitsi-web` service. Coolify must
-   expose its internal port `80`.
+   expose its internal port `80`. Coolify then creates
+   `SERVICE_URL_JITSI_WEB`; do not create it manually in the environment UI.
 4. Copy the values from `.env.example` into Coolify's environment variables,
 replacing every placeholder with a distinct secret.
 5. Set `JVB_ADVERTISE_IPS` to the server's public IPv4 address.
@@ -55,5 +56,5 @@ Copy `.env.example` to `.env`, replace placeholders and IP address, then run:
 docker compose up --build
 ```
 
-For local-only testing, set `SERVICE_URL_JITSI=http://localhost` and
+For local-only testing, set `SERVICE_URL_JITSI_WEB=http://localhost` and
 `JVB_ADVERTISE_IPS` to the LAN/public address reachable by test participants.

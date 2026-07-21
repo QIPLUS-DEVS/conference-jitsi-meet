@@ -1,0 +1,116 @@
+services:
+  jitsi-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JITSI_IMAGE_VERSION: ${JITSI_IMAGE_VERSION:-stable-10888}
+    image: qiplus/jitsi-web:${QIPLUS_IMAGE_TAG:-local}
+    restart: unless-stopped
+    expose:
+      - '80'
+    environment:
+      PUBLIC_URL: ${SERVICE_URL_JITSI}
+      ENABLE_AUTH: ${ENABLE_AUTH:-1}
+      ENABLE_GUESTS: ${ENABLE_GUESTS:-0}
+      AUTH_TYPE: jwt
+      JWT_APP_ID: ${JWT_APP_ID:-qiplus}
+      JWT_APP_SECRET: ${JWT_APP_SECRET}
+      JWT_ACCEPTED_ISSUERS: ${JWT_ACCEPTED_ISSUERS:-qiplus}
+      JWT_ACCEPTED_AUDIENCES: ${JWT_ACCEPTED_AUDIENCES:-qiplus}
+      ENABLE_LETSENCRYPT: 0
+      ENABLE_HTTP_REDIRECT: 0
+      DISABLE_HTTPS: 1
+      XMPP_DOMAIN: meet.jitsi
+      XMPP_AUTH_DOMAIN: auth.meet.jitsi
+      XMPP_GUEST_DOMAIN: guest.meet.jitsi
+      XMPP_MUC_DOMAIN: conference.meet.jitsi
+      XMPP_INTERNAL_MUC_DOMAIN: internal.auth.meet.jitsi
+      XMPP_BOSH_URL_BASE: http://prosody:5280
+      JVB_BREWERY_MUC: jvbbrewery
+      JICOFO_COMPONENT_SECRET: ${JICOFO_COMPONENT_SECRET}
+      JICOFO_AUTH_PASSWORD: ${JICOFO_AUTH_PASSWORD}
+      JVB_AUTH_PASSWORD: ${JVB_AUTH_PASSWORD}
+      TZ: ${TZ:-America/Sao_Paulo}
+    depends_on:
+      - prosody
+      - jicofo
+      - jvb
+    volumes:
+      - jitsi-web:/config
+
+  prosody:
+    image: jitsi/prosody:${JITSI_IMAGE_VERSION:-stable-10888}
+    restart: unless-stopped
+    environment:
+      AUTH_TYPE: jwt
+      ENABLE_AUTH: ${ENABLE_AUTH:-1}
+      ENABLE_GUESTS: ${ENABLE_GUESTS:-0}
+      JWT_APP_ID: ${JWT_APP_ID:-qiplus}
+      JWT_APP_SECRET: ${JWT_APP_SECRET}
+      JWT_ACCEPTED_ISSUERS: ${JWT_ACCEPTED_ISSUERS:-qiplus}
+      JWT_ACCEPTED_AUDIENCES: ${JWT_ACCEPTED_AUDIENCES:-qiplus}
+      XMPP_DOMAIN: meet.jitsi
+      XMPP_AUTH_DOMAIN: auth.meet.jitsi
+      XMPP_GUEST_DOMAIN: guest.meet.jitsi
+      XMPP_MUC_DOMAIN: conference.meet.jitsi
+      XMPP_INTERNAL_MUC_DOMAIN: internal.auth.meet.jitsi
+      JICOFO_COMPONENT_SECRET: ${JICOFO_COMPONENT_SECRET}
+      JICOFO_AUTH_PASSWORD: ${JICOFO_AUTH_PASSWORD}
+      JVB_AUTH_PASSWORD: ${JVB_AUTH_PASSWORD}
+      PUBLIC_URL: ${SERVICE_URL_JITSI}
+      TZ: ${TZ:-America/Sao_Paulo}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    volumes:
+      - jitsi-prosody:/config
+
+  jicofo:
+    image: jitsi/jicofo:${JITSI_IMAGE_VERSION:-stable-10888}
+    restart: unless-stopped
+    environment:
+      AUTH_TYPE: jwt
+      ENABLE_AUTH: ${ENABLE_AUTH:-1}
+      XMPP_DOMAIN: meet.jitsi
+      XMPP_AUTH_DOMAIN: auth.meet.jitsi
+      XMPP_INTERNAL_MUC_DOMAIN: internal.auth.meet.jitsi
+      XMPP_MUC_DOMAIN: conference.meet.jitsi
+      XMPP_SERVER: prosody
+      JICOFO_COMPONENT_SECRET: ${JICOFO_COMPONENT_SECRET}
+      JICOFO_AUTH_PASSWORD: ${JICOFO_AUTH_PASSWORD}
+      JVB_BREWERY_MUC: jvbbrewery
+      JICOFO_ENABLE_HEALTH_CHECKS: 1
+      TZ: ${TZ:-America/Sao_Paulo}
+    depends_on:
+      - prosody
+    volumes:
+      - jitsi-jicofo:/config
+
+  jvb:
+    image: jitsi/jvb:${JITSI_IMAGE_VERSION:-stable-10888}
+    restart: unless-stopped
+    ports:
+      - '10000:10000/udp'
+    environment:
+      XMPP_SERVER: prosody
+      XMPP_DOMAIN: meet.jitsi
+      XMPP_AUTH_DOMAIN: auth.meet.jitsi
+      XMPP_INTERNAL_MUC_DOMAIN: internal.auth.meet.jitsi
+      XMPP_MUC_DOMAIN: conference.meet.jitsi
+      JVB_AUTH_USER: jvb
+      JVB_AUTH_PASSWORD: ${JVB_AUTH_PASSWORD}
+      JVB_BREWERY_MUC: jvbbrewery
+      JVB_PORT: 10000
+      JVB_ADVERTISE_IPS: ${JVB_ADVERTISE_IPS}
+      JVB_STUN_SERVERS: ${JVB_STUN_SERVERS:-stun.l.google.com:19302}
+      PUBLIC_URL: ${SERVICE_URL_JITSI}
+      TZ: ${TZ:-America/Sao_Paulo}
+    depends_on:
+      - prosody
+    volumes:
+      - jitsi-jvb:/config
+
+volumes:
+  jitsi-web:
+  jitsi-prosody:
+  jitsi-jicofo:
+  jitsi-jvb:

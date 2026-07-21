@@ -1,0 +1,14 @@
+.git
+.github
+.idea
+.vscode
+android
+ios
+node_modules
+react-native-sdk/node_modules
+tests
+build
+libs
+source_package
+*.log
+.env
